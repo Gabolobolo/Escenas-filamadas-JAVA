@@ -1,0 +1,44 @@
+public class Toma {
+    private int numero;
+    private double metrosPelicula;
+    private String codigoBobina;
+
+    public Toma(int numero, double metrosPelicula, String codigoBobina) {
+        this.numero = numero;
+        this.metrosPelicula = metrosPelicula;
+        this.codigoBobina = codigoBobina;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public double getMetrosPelicula() {
+        return metrosPelicula;
+    }
+
+    public void setMetrosPelicula(double metrosPelicula) {
+        this.metrosPelicula = metrosPelicula;
+    }
+
+    public String getCodigoBobina() {
+        return codigoBobina;
+    }
+
+    public void setCodigoBobina(String codigoBobina) {
+        this.codigoBobina = codigoBobina;
+    }
+
+    @Override
+    public String toString() {
+        return "Toma{" +
+                "numero=" + numero +
+                ", metrosPelicula=" + metrosPelicula +
+                ", codigoBobina='" + codigoBobina + '\'' +
+                '}';
+    }
+}

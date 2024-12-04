@@ -1,0 +1,16 @@
+public class EscenaInterna extends Escena {
+    private String tipoTeatro;
+
+    public EscenaInterna(String codigo, String descripcion, String tipoTeatro) {
+        super(codigo, descripcion);
+        this.tipoTeatro = tipoTeatro;
+    }
+
+    @Override
+    public String toString() {
+        return "EscenaInterna{" +
+                "tipoTeatro='" + tipoTeatro + '\'' +
+                ", " + super.toString() +
+                '}';
+    }
+}

@@ -1,0 +1,173 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    private static List<Escena> escenas = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        boolean salir = false;
+
+        while (!salir) {
+            System.out.println("\n--- Menú ---");
+            System.out.println("1. Registrar escena");
+            System.out.println("2. Registrar escenario para una escena");
+            System.out.println("3. Registrar toma para un escenario");
+            System.out.println("4. Listar todas las escenas");
+            System.out.println("5. Salir");
+            System.out.print("Selecciona una opción: ");
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea
+
+            switch (opcion) {
+                case 1:
+                    registrarEscena();
+                    break;
+                case 2:
+                    registrarEscenario();
+                    break;
+                case 3:
+                    registrarToma();
+                    break;
+                case 4:
+                    listarEscenas();
+                    break;
+                case 5:
+                    salir = true;
+                    System.out.println("Saliendo del sistema...");
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
+        }
+    }
+
+    private static void registrarEscena() {
+        System.out.print("Código de la escena: ");
+        String codigo = scanner.nextLine();
+        System.out.print("Descripción de la escena: ");
+        String descripcion = scanner.nextLine();
+        System.out.print("¿Es interna o externa? (1 para interna, 2 para externa): ");
+        int tipo = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea
+
+        if (tipo == 1) {
+            System.out.print("Tipo de teatro: ");
+            String tipoTeatro = scanner.nextLine();
+            EscenaInterna escena = new EscenaInterna(codigo, descripcion, tipoTeatro);
+            escenas.add(escena);
+        } else if (tipo == 2) {
+            System.out.print("Tipo (día o noche): ");
+            String tipoExterna = scanner.nextLine();
+            System.out.print("Código de la locación: ");
+            String codigoLocacion = scanner.nextLine();
+            System.out.print("Dirección de la locación: ");
+            String direccionLocacion = scanner.nextLine();
+            System.out.print("Descripción de la locación: ");
+            String descripcionLocacion = scanner.nextLine();
+
+            Locacion locacion = new Locacion(codigoLocacion, direccionLocacion, descripcionLocacion);
+            EscenaExterna escena = new EscenaExterna(codigo, descripcion, tipoExterna, locacion);
+            escenas.add(escena);
+        } else {
+            System.out.println("Opción no válida.");
+        }
+        System.out.println("Escena registrada exitosamente.");
+    }
+
+    private static void registrarEscenario() {
+        if (escenas.isEmpty()) {
+            System.out.println("No hay escenas registradas.");
+            return;
+        }
+
+        System.out.println("Seleccione una escena:");
+        for (int i = 0; i < escenas.size(); i++) {
+            System.out.println((i + 1) + ". " + escenas.get(i).getDescripcion());
+        }
+        int escenaIndex = scanner.nextInt() - 1;
+        scanner.nextLine(); // Consumir el salto de línea
+
+        if (escenaIndex < 0 || escenaIndex >= escenas.size()) {
+            System.out.println("Selección inválida.");
+            return;
+        }
+
+        System.out.print("Código del escenario: ");
+        String codigo = scanner.nextLine();
+        System.out.print("Descripción del escenario: ");
+        String descripcion = scanner.nextLine();
+        System.out.print("Apertura: ");
+        double apertura = scanner.nextDouble();
+        System.out.print("Exposición: ");
+        double exposicion = scanner.nextDouble();
+        System.out.print("Longitud focal: ");
+        double longitudFocal = scanner.nextDouble();
+        scanner.nextLine(); // Consumir el salto de línea
+
+        Escenario escenario = new Escenario(codigo, descripcion, apertura, exposicion, longitudFocal);
+        escenas.get(escenaIndex).agregarEscenario(escenario);
+        System.out.println("Escenario registrado exitosamente.");
+    }
+
+    private static void registrarToma() {
+        if (escenas.isEmpty()) {
+            System.out.println("No hay escenas registradas.");
+            return;
+        }
+
+        System.out.println("Seleccione una escena:");
+        for (int i = 0; i < escenas.size(); i++) {
+            System.out.println((i + 1) + ". " + escenas.get(i).getDescripcion());
+        }
+        int escenaIndex = scanner.nextInt() - 1;
+        scanner.nextLine(); // Consumir el salto de línea
+
+        if (escenaIndex < 0 || escenaIndex >= escenas.size()) {
+            System.out.println("Selección inválida.");
+            return;
+        }
+
+        Escena escena = escenas.get(escenaIndex);
+        if (escena.getEscenarios().isEmpty()) {
+            System.out.println("Esta escena no tiene escenarios registrados.");
+            return;
+        }
+
+        System.out.println("Seleccione un escenario:");
+        for (int i = 0; i < escena.getEscenarios().size(); i++) {
+            System.out.println((i + 1) + ". " + escena.getEscenarios().get(i).getDescripcion());
+        }
+        int escenarioIndex = scanner.nextInt() - 1;
+        scanner.nextLine(); // Consumir el salto de línea
+
+        if (escenarioIndex < 0 || escenarioIndex >= escena.getEscenarios().size()) {
+            System.out.println("Selección inválida.");
+            return;
+        }
+
+        System.out.print("Número de toma: ");
+        int numero = scanner.nextInt();
+        System.out.print("Metros de película usados: ");
+        double metrosPelicula = scanner.nextDouble();
+        scanner.nextLine(); // Consumir el salto de línea
+        System.out.print("Código de la bobina: ");
+        String codigoBobina = scanner.nextLine();
+
+        Toma toma = new Toma(numero, metrosPelicula, codigoBobina);
+        escena.getEscenarios().get(escenarioIndex).agregarToma(toma);
+        System.out.println("Toma registrada exitosamente.");
+    }
+
+    private static void listarEscenas() {
+        if (escenas.isEmpty()) {
+            System.out.println("No hay escenas registradas.");
+        } else {
+            System.out.println("Lista de escenas:");
+            for (Escena escena : escenas) {
+                System.out.println(escena);
+            }
+        }
+    }
+}

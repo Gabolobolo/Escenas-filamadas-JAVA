@@ -1,0 +1,44 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Escena {
+    private String codigo;
+    private String descripcion;
+    private List<Escenario> escenarios;
+
+    // Constructor
+    public Escena(String codigo, String descripcion) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.escenarios = new ArrayList<>();
+    }
+
+    // Método para agregar escenarios
+    public void agregarEscenario(Escenario escenario) {
+        this.escenarios.add(escenario);
+    }
+
+    // Getter para la lista de escenarios
+    public List<Escenario> getEscenarios() {
+        return escenarios;
+    }
+
+    // Getter para la descripción
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    // Getter para el código (por si lo necesitas en el futuro)
+    public String getCodigo() {
+        return codigo;
+    }
+
+    @Override
+    public String toString() {
+        return "Escena{" +
+                "codigo='" + codigo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", escenarios=" + escenarios +
+                '}';
+    }
+}

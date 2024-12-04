@@ -1,0 +1,44 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Escenario {
+    private String codigo;
+    private String descripcion;
+    private double apertura;
+    private double exposicion;
+    private double longitudFocal;
+    private List<Toma> tomas;
+
+    public Escenario(String codigo, String descripcion, double apertura, double exposicion, double longitudFocal) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.apertura = apertura;
+        this.exposicion = exposicion;
+        this.longitudFocal = longitudFocal;
+        this.tomas = new ArrayList<>();
+    }
+
+    public void agregarToma(Toma toma) {
+        this.tomas.add(toma);
+    }
+
+    public List<Toma> getTomas() {
+        return tomas;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    @Override
+    public String toString() {
+        return "Escenario{" +
+                "codigo='" + codigo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", apertura=" + apertura +
+                ", exposicion=" + exposicion +
+                ", longitudFocal=" + longitudFocal +
+                ", tomas=" + tomas +
+                '}';
+    }
+}
